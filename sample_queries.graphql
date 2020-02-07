@@ -1,4 +1,5 @@
 1. Fragment types (helps to not repeat same attributes) with names queries:
+
 {
   google: company(id: "2") {
     ...CompanyDetails
@@ -15,4 +16,15 @@ fragment CompanyDetails on Company {
 		users {
 		  id
 		}
+}
+
+
+2. Mutation usage query
+
+mutation {
+  addUser(firstName: "Joe", age: 88) {
+    firstName
+		age
+		id
+  }
 }
