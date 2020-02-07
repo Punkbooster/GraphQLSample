@@ -5,16 +5,26 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLSchema
+  GraphQLSchema,
+  GraphQLList
 } = graphql
 
 const CompanyType = new GraphQLObjectType({
   name: 'Company',
-  fields: {
+  fields: () => ({ // rocker function is needed here so function called when all functions are loaded (otherwise we will get undefined function UserType)
     id: { type: GraphQLString },
     name: { type: GraphQLString },
-    description: { type: GraphQLString }
-  }
+    description: { type: GraphQLString },
+    users: {
+      type: new GraphQLList(UserType),
+      // using GraphQLList because company has multiple users
+      // parentValue is a company in this case
+      resolve(parentValue, args) {
+        return axios.get(`http://localhost:3000/companies/${parentValue.id}/users`)
+          .then(res => res.data)
+      }
+    }
+  })
 })
 
 const UserType = new GraphQLObjectType({

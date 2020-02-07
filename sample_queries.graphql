@@ -1,0 +1,18 @@
+1. Fragment types (helps to not repeat same attributes) with names queries:
+{
+  google: company(id: "2") {
+    ...CompanyDetails
+  }
+	apple: company(id: "1") {
+    ...CompanyDetails
+  }
+}
+
+fragment CompanyDetails on Company {
+  id
+		name
+		description
+		users {
+		  id
+		}
+}
